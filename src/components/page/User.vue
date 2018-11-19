@@ -1,0 +1,146 @@
+<template>
+  <Card>
+    <Table stripe border :columns="columns1" :data="data1"></Table>
+    <div style="margin: 10px;overflow: hidden">
+      <div style="float: right;">
+        <Page :total="100" :current="1" @on-change="changePage"></Page>
+      </div>
+    </div>
+  </Card>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      columns1: [
+        {
+          type: 'selection',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: 'ID',
+          key: 'id',
+          sortable: true
+        },
+        {
+          title: '名称',
+          key: 'name',
+          sortable: true
+        },
+        {
+          title: '头像',
+          key: 'headurl'
+        },
+        {
+          title: '手机号',
+          key: 'phone',
+          filters: [
+            {
+              label: '13183131313',
+              value: '13183131313'
+            },
+            {
+              label: '13113131313',
+              value: '13113131313'
+            }
+          ],
+          filterMethod(value, row) {
+            return row.phone.indexOf(value) > -1;
+          }
+        },
+        {
+          title: '所属公司',
+          key: 'company'
+        },
+        {
+          title: '绑定微信',
+          key: 'bingwechat'
+        },
+        {
+          title: '创建时间',
+          key: 'date',
+          sortable: true
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          width: 150,
+          render: (h, params) => {
+            return h('div', [
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.show(params.index)
+                  }
+                }
+              }, '查看'),
+              h('Poptip', {
+                props: {
+                  confirm: true,
+                  title: '你确定要删除吗?'
+                },
+                on: {
+                  'on-ok': () => {
+                    this.remove(params.index)
+                    // vm.$emit('on-delete', params)
+                    // vm.$emit('input', params.data1.filter((item, index) => index !== params.row.initRowIndex))
+                  },
+                  'on-cancel': () => {
+                    console.log("cancel");
+                  }
+                }
+              }, '删除')
+            ]);
+          }
+        }
+      ],
+
+      data1: this.mockTableData1()
+    }
+  },
+  methods: {
+    show (index) {
+      this.$Modal.confirm({
+        title: 'User Info',
+        content: `Name：${this.data1[index].name}<br>Headurl：${this.data1[index].headurl}<br>Phone：${this.data1[index].phone}`
+      })
+    },
+    remove (index) {
+      this.data1.splice(index, 1);
+    },
+    mockTableData1() {
+      let data = [];
+      for (let i = 0; i < 10; i++) {
+        data.push({
+          id: i,
+          name: "Mike " + Math.floor(Math.random() * 100 + 1),
+          headurl: "url",
+          phone: "131" + Math.floor(Math.random() * 100000000 + 1),
+          company: "公司1",
+          bingwechat: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
+          date: new Date()
+        })
+      }
+      return data;
+    },
+    changePage() {
+      // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+      this.data1 = this.mockTableData1();
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>

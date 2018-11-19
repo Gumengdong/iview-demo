@@ -1,0 +1,103 @@
+<template>
+  <Menu :active-name="menuitemSelect.subitem" :accordion="true" :open-names="[menuitemSelect.item]" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed">
+    <Submenu name="home1">
+      <template slot="title">
+          <Icon type="ios-grid" size="18" />
+          <span>基础数据</span>
+      </template>
+      <MenuItem name="home1-user" to="/home/user">用户管理</MenuItem>
+      <MenuItem name="home1-role" to="/home/role">角色管理</MenuItem>
+      <MenuItem name="home1-company" to="/home/company">公司管理</MenuItem>
+    </Submenu>
+    <Submenu name="home2">
+      <template slot="title">
+          <Icon type="md-bulb" size="18" />
+          <span>设备管理</span>
+      </template>
+      <MenuItem name="home2-1">网关</MenuItem>
+      <MenuItem name="home2-2">飞比设备</MenuItem>
+      <MenuItem name="home2-3">空调设备</MenuItem>
+    </Submenu>
+    <Submenu name="home3">
+      <template slot="title">
+          <Icon type="md-person" size="18" />
+          <span>账号设置</span>
+      </template>
+      <MenuItem name="home3-1">个人信息</MenuItem>
+    </Submenu>
+  </Menu>
+</template>
+
+<script>
+export default {
+  name: 'slide',
+  data () {
+    return {
+      msg:"slide"
+    }
+  },
+  props: ['isCollapsed','urlRouter'],
+  computed: {
+    menuitemClasses: function() {
+      return [
+        'menu-item',
+        this.isCollapsed ? 'collapsed-menu' : ''
+      ]
+    },
+    menuitemSelect: function() {
+      let activeName = {
+        "subitem": "",
+        "item": ""
+      };
+      console.log(this.$route.path);
+      switch (this.$route.path){
+        case '/home/user':
+          activeName.subitem = "home1-user";
+          activeName.item = "home1";
+          break;
+        case '/home/role':
+          activeName.subitem = "home1-role";
+          activeName.item = "home1";
+          break;
+        case '/home/company':
+          activeName.subitem = "home1-company";
+          activeName.item = "home1";
+          break;
+        default:
+          activeName.subitem = "";
+          activeName.item = "";
+      }
+      return activeName;
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+    .menu-item span{
+        display: inline-block;
+        overflow: hidden;
+        width: 69px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: width .2s ease .2s;
+    }
+    .menu-item i{
+        transform: translateX(0px);
+        transition: font-size .2s ease, transform .2s ease;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    .collapsed-menu span{
+        width: 0px;
+        transition: width .2s ease;
+    }
+    .collapsed-menu i{
+        transform: translateX(5px);
+        transition: font-size .2s ease .2s, transform .2s ease .2s;
+        vertical-align: middle;
+        font-size: 22px;
+    }
+</style>
