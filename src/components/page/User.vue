@@ -1,12 +1,18 @@
 <template>
-  <Card>
-    <Table stripe border :columns="columns1" :data="data1"></Table>
-    <div style="margin: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :total="100" :current="1" @on-change="changePage"></Page>
+  <div>
+    <Breadcrumb style="margin-bottom:20px">
+      <BreadcrumbItem to="/home">首页</BreadcrumbItem>
+      <BreadcrumbItem>用户管理</BreadcrumbItem>
+    </Breadcrumb>
+    <Card>
+      <Table stripe border :columns="columns1" :data="data1"></Table>
+      <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+          <Page :total="100" :current="1" @on-change="changePage"></Page>
+        </div>
       </div>
-    </div>
-  </Card>
+    </Card>
+  </div>
 </template>
 
 <script>
@@ -38,12 +44,12 @@ export default {
           key: 'phone',
           filters: [
             {
-              label: '13183131313',
-              value: '13183131313'
+              label: '1311',
+              value: '1311'
             },
             {
-              label: '13113131313',
-              value: '13113131313'
+              label: '1312',
+              value: '1312'
             }
           ],
           filterMethod(value, row) {
@@ -64,7 +70,7 @@ export default {
           sortable: true
         },
         {
-          title: 'Action',
+          title: '操作',
           key: 'action',
           width: 150,
           render: (h, params) => {

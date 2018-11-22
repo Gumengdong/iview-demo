@@ -1,11 +1,17 @@
 <template>
   <div>
-    <Table :data="tableData1" :columns="tableColumns1" stripe></Table>
-    <div style="margin: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :total="100" :current="1" @on-change="changePage"></Page>
+    <Breadcrumb style="margin-bottom:20px">
+      <BreadcrumbItem to="/home">首页</BreadcrumbItem>
+      <BreadcrumbItem>公司管理</BreadcrumbItem>
+    </Breadcrumb>
+    <Card>
+      <Table :data="tableData1" :columns="tableColumns1" stripe></Table>
+      <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+          <Page :total="100" :current="1" @on-change="changePage"></Page>
+        </div>
       </div>
-    </div>
+    </Card>
   </div>
 </template>
 <script>

@@ -2,7 +2,7 @@
   <div>
     <Breadcrumb style="margin-bottom:20px">
       <BreadcrumbItem to="/home">首页</BreadcrumbItem>
-      <BreadcrumbItem>角色管理</BreadcrumbItem>
+      <BreadcrumbItem>消息中心</BreadcrumbItem>
     </Breadcrumb>
     <Card>
       {{msg}}
@@ -29,10 +29,10 @@
 
 <script>
 export default {
-  name: 'Role',
+  name: 'Msg',
   data () {
     return {
-      msg:"Role"
+      msg:"Msg"
     }
   },
   methods: {

@@ -23,7 +23,7 @@
           <Icon type="md-person" size="18" />
           <span>账号设置</span>
       </template>
-      <MenuItem name="home3-1">个人信息</MenuItem>
+      <MenuItem name="home3-1" to="/home/userinfo">个人信息</MenuItem>
     </Submenu>
   </Menu>
 </template>

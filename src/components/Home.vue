@@ -12,7 +12,7 @@
               <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
                 <Head @sliderToggle="sliderToggle"></Head>
               </Header>
-              <Content :style="{padding: '24px'}">
+              <Content :style="{padding: '24px',height: 'calc(100% - 80px)',overflow: 'auto'}">
                 <router-view></router-view>
               </Content>
               <Footer :style="{background: '#fff', boxShadow: '0 -2px 3px 2px rgba(0,0,0,.1)' , textAlign: 'center'}">Copyright © 武智科技2017. All rights reserved.</Footer>
@@ -60,5 +60,8 @@
   }
   .ivu-layout .ivu-content {
     height: calc(100% - 80px);
+  }
+  .ivu-layout-footer {
+    padding: 10px 20px;
   }
 </style>
