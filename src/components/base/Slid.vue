@@ -14,16 +14,9 @@
           <Icon type="md-bulb" size="18" />
           <span>设备管理</span>
       </template>
-      <MenuItem name="home2-1">网关</MenuItem>
-      <MenuItem name="home2-2">飞比设备</MenuItem>
-      <MenuItem name="home2-3">空调设备</MenuItem>
-    </Submenu>
-    <Submenu name="home3">
-      <template slot="title">
-          <Icon type="md-person" size="18" />
-          <span>账号设置</span>
-      </template>
-      <MenuItem name="home3-1" to="/home/userinfo">个人信息</MenuItem>
+      <MenuItem name="home2-Gateway">网关</MenuItem>
+      <MenuItem name="home2-Device">飞比设备</MenuItem>
+      <MenuItem name="home2-Aircondition">空调设备</MenuItem>
     </Submenu>
   </Menu>
 </template>

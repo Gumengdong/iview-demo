@@ -10,6 +10,10 @@
           </Badge>
           <Icon :size="18" type="md-arrow-dropdown"></Icon>
           <DropdownMenu slot="list">
+            <DropdownItem name="userinfo">
+              <Icon type="ios-person-outline" :size="18" />
+              个人信息
+            </DropdownItem>
             <DropdownItem name="message">
               <Icon type="ios-chatbubbles-outline" :size="18" />
               消息中心
@@ -103,12 +107,20 @@ export default {
         path: '/home/msg'
       });
     },
+    userinfo () {
+      this.$router.push({
+        path: '/home/userinfo'
+      });
+    },
     handleClick (name) {
       switch (name) {
         case 'logout': this.logout()
-          break
+          break;
         case 'message': this.message()
-          break
+          break;
+        case 'userinfo': this.userinfo()
+          break;
+        default:
       }
     }
   },

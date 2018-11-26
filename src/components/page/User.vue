@@ -5,7 +5,7 @@
       <BreadcrumbItem>用户管理</BreadcrumbItem>
     </Breadcrumb>
     <Card>
-      <Table stripe border :columns="columns1" :data="data1"></Table>
+      <Table stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
           <Page :total="100" :current="1" @on-change="changePage"></Page>
@@ -33,7 +33,8 @@ export default {
         {
           title: '名称',
           key: 'name',
-          sortable: true
+          sortable: true,
+          editable: true
         },
         {
           title: '头像',
@@ -85,14 +86,32 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index)
+                    this.show(params.index);
                   }
                 }
               }, '查看'),
+
+              h('Button', {
+                props: {
+                  type: 'info',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    console.log(this.columns1);
+                    console.log(this.data1[params.index]);
+                  }
+                }
+              }, '编辑'),
+
               h('Poptip', {
                 props: {
                   confirm: true,
-                  title: '你确定要删除吗?'
+                  title: '你确定要删除吗？',
+                  placement: 'left'
                 },
                 on: {
                   'on-ok': () => {
@@ -115,9 +134,16 @@ export default {
   },
   methods: {
     show (index) {
-      this.$Modal.confirm({
+      let cont = "";
+      for (let i = 0; i < this.columns1.length; i++) {
+        if (this.columns1[i].title != undefined && this.columns1[i].key != "action") {
+          cont += this.columns1[i].title + "：" + this.data1[index][this.columns1[i].key] + "<br>";
+        }
+      }
+      this.$Modal.warning({
         title: 'User Info',
-        content: `Name：${this.data1[index].name}<br>Headurl：${this.data1[index].headurl}<br>Phone：${this.data1[index].phone}`
+        content: cont,
+        closable: true
       })
     },
     remove (index) {
@@ -131,7 +157,7 @@ export default {
           name: "Mike " + Math.floor(Math.random() * 100 + 1),
           headurl: "url",
           phone: "131" + Math.floor(Math.random() * 100000000 + 1),
-          company: "公司1",
+          company: "公司" + (Math.floor(Math.random() * 2 + 1) == 2 ? 'a':'b'),
           bingwechat: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
           date: new Date()
         })
