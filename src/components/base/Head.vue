@@ -104,12 +104,12 @@ export default {
     },
     message () {
       this.$router.push({
-        path: '/home/msg'
+        path: '/manage/msg'
       });
     },
     userinfo () {
       this.$router.push({
-        path: '/home/userinfo'
+        path: '/manage/userinfo'
       });
     },
     handleClick (name) {

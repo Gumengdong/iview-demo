@@ -1,9 +1,6 @@
 <template>
   <div>
-    <Breadcrumb style="margin-bottom:20px">
-      <BreadcrumbItem to="/home">首页</BreadcrumbItem>
-      <BreadcrumbItem>角色管理</BreadcrumbItem>
-    </Breadcrumb>
+    <Crumbs :title="msg.title"></Crumbs>
     <Card>
       {{msg}}
 
@@ -28,22 +25,28 @@
 </template>
 
 <script>
-export default {
-  name: 'Role',
-  data () {
-    return {
-      msg:"Role"
-    }
-  },
-  methods: {
-    ok() {
-      this.$Message.info('You click ok');
+  import Crumbs from '@/components/base/Crumbs.vue';
+  export default {
+    name: 'Role',
+    data () {
+      return {
+        msg: {
+          title: document.title
+        },
+      }
     },
-    cancel() {
-      this.$Message.info('You click cancel');
+    components: {
+      Crumbs
+    },
+    methods: {
+      ok() {
+        this.$Message.info('You click ok');
+      },
+      cancel() {
+        this.$Message.info('You click cancel');
+      }
     }
-  }
-};
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

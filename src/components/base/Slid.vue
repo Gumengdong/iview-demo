@@ -1,13 +1,13 @@
 <template>
   <Menu :active-name="menuitemSelect.subitem" :accordion="true" :open-names="[menuitemSelect.item]" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed">
-    <Submenu name="home1">
+    <Submenu name="manage1">
       <template slot="title">
           <Icon type="ios-grid" size="18" />
           <span>基础数据</span>
       </template>
-      <MenuItem name="home1-user" to="/home/user">用户管理</MenuItem>
-      <MenuItem name="home1-role" to="/home/role">角色管理</MenuItem>
-      <MenuItem name="home1-company" to="/home/company">公司管理</MenuItem>
+      <MenuItem name="manage1-user" to="/manage/user">用户管理</MenuItem>
+      <MenuItem name="manage1-role" to="/manage/role">角色管理</MenuItem>
+      <MenuItem name="manage1-company" to="/manage/company">公司管理</MenuItem>
     </Submenu>
     <Submenu name="home2">
       <template slot="title">
@@ -44,17 +44,17 @@ export default {
       };
       console.log(this.$route.path);
       switch (this.$route.path){
-        case '/home/user':
-          activeName.subitem = "home1-user";
-          activeName.item = "home1";
+        case '/manage/user':
+          activeName.subitem = "manage1-user";
+          activeName.item = "manage1";
           break;
-        case '/home/role':
-          activeName.subitem = "home1-role";
-          activeName.item = "home1";
+        case '/manage/role':
+          activeName.subitem = "manage1-role";
+          activeName.item = "manage1";
           break;
-        case '/home/company':
-          activeName.subitem = "home1-company";
-          activeName.item = "home1";
+        case '/manage/company':
+          activeName.subitem = "manage1-company";
+          activeName.item = "manage1";
           break;
         default:
           activeName.subitem = "";

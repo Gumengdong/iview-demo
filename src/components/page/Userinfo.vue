@@ -1,9 +1,6 @@
 <template>
   <div>
-    <Breadcrumb style="margin-bottom:20px">
-      <BreadcrumbItem to="/home">首页</BreadcrumbItem>
-      <BreadcrumbItem>个人信息</BreadcrumbItem>
-    </Breadcrumb>
+    <Crumbs :title="msg.title"></Crumbs>
     <Card>
       <Form :model="formItem" :label-width="80">
         <Row>
@@ -92,9 +89,13 @@
   </div>
 </template>
 <script>
+  import Crumbs from '@/components/base/Crumbs.vue';
   export default {
     data() {
       return {
+        msg: {
+          title: document.title
+        },
         formItem: {
           input: '',
           select: '1',
@@ -107,6 +108,9 @@
           textarea: ''
         }
       }
+    },
+    components: {
+      Crumbs
     }
   };
 </script>

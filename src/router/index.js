@@ -19,56 +19,65 @@ export default new Router({
       redirect: { name: 'Welcome' }
     },
     {
-      path: '/home',
+      path: '/manage',
       name: 'Home',
       component: Home,
+      meta: {
+        title: '配置端'
+      },
       children: [
         {
-          path: '/home',
+          path: '/manage',
           name: 'Welcome',
           component: Welcome,
           meta: {
             requireAuth: true,
+            title: 'Home'
           }
         },
         {
-          path: '/home/user',
+          path: '/manage/user',
           name: 'User',
           component: User,
           meta: {
             requireAuth: true,
+            title: '用户管理'
           }
         },
         {
-          path: '/home/role',
+          path: '/manage/role',
           name: 'Role',
           component: Role,
           meta: {
             requireAuth: true,
+            title: '角色管理'
           }
         },
         {
-          path: '/home/company',
+          path: '/manage/company',
           name: 'Company',
           component: Company,
           meta: {
             requireAuth: true,
+            title: '公司管理'
           }
         },
         {
-          path: '/home/msg',
+          path: '/manage/msg',
           name: 'Msg',
           component: Msg,
           meta: {
             requireAuth: true,
+            title: '消息'
           }
         },
         {
-          path: '/home/userinfo',
+          path: '/manage/userinfo',
           name: 'Userinfo',
           component: Userinfo,
           meta: {
             requireAuth: true,
+            title: '个人资料'
           }
         }
       ]
@@ -76,7 +85,10 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        title: '登录'
+      }
     }
   ]
 })

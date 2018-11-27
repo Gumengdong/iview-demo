@@ -33,7 +33,7 @@
     },
     /*beforeCreate() {
       if(this.$store.state.isLogin === 100){
-        this.$router.push('/home');
+        this.$router.push('/manage');
       }
     },*/
     methods: {
@@ -59,7 +59,7 @@
             setCookie("token","super_admin");
             temp.$store.commit('changeLogin', '100');
             setTimeout(function() {
-              temp.$router.push('/home');
+              temp.$router.push('/manage');
             }.bind(temp), 800);
           } else {
             temp.$Message.error(response.data.msg);
