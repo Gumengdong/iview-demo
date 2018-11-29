@@ -5,8 +5,9 @@
       <Col :xs="{ span: 16, offset: 4 }" :sm="{ span: 10, offset: 12 }" :md="{ span: 7, offset: 14 }" :lg="{ span: 6, offset: 16 }">
         <Card icon="log-in" title="欢迎登录" :bordered="false">
           <div class="form-con">
-            <LoginForm></LoginForm>
+            <LoginForm :redirect="redirect"></LoginForm>
             <p class="login-tip">输入任意用户名和密码即可</p>
+            <p>{{redirect}}</p>
           </div>
         </Card>
       </Col>
@@ -16,15 +17,21 @@
 
 <script>
   import LoginForm from '@/components/base/Login-Form.vue';
+  import {GetRequest} from '@/utils/utils.js';
   export default {
     name: 'test',
     data () {
       return {
-        msg: "test"
+        msg: "test",
+        redirect: ""
       }
     },
     components: {
       LoginForm
+    },
+    mounted: function() {
+      var Request = GetRequest();
+      this.redirect = Request.redirect;
     }
   };
 </script>

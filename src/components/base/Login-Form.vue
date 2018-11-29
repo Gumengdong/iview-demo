@@ -8,7 +8,7 @@
       </Input>
     </FormItem>
     <FormItem prop="password">
-      <Input type="password" v-model="form.password" placeholder="请输入密码">
+      <Input type="password" v-model="form.password" placeholder="请输入密码" @keyup.enter.native="handleSubmit">
         <span slot="prepend">
           <Icon :size="14" type="md-lock"></Icon>
         </span>
@@ -31,6 +31,7 @@
         }
       }
     },
+    props: ['redirect'],
     /*beforeCreate() {
       if(this.$store.state.isLogin === 100){
         this.$router.push('/manage');
@@ -56,10 +57,14 @@
           console.log(response);
           if (response.data.code == 200) {
             temp.$Message.success('登录成功');
-            setCookie("token","super_admin");
+            setCookie("token",temp.form.password);
             temp.$store.commit('changeLogin', '100');
             setTimeout(function() {
-              temp.$router.push('/manage');
+              if(temp.redirect != "" && temp.redirect != undefined){
+                temp.$router.push(temp.redirect);
+              } else {
+                temp.$router.push('/manage');
+              }
             }.bind(temp), 800);
           } else {
             temp.$Message.error(response.data.msg);

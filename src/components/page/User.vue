@@ -2,12 +2,27 @@
   <div>
     <Crumbs :title="msg.title"></Crumbs>
     <Card>
+      <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true">{{msg.buttonText}}</Button>
       <Table stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
           <Page :total="100" :current="1" @on-change="changePage"></Page>
         </div>
       </div>
+      <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
+        <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
+          <FormItem label="用户名" prop="username">
+            <Input v-model="formInline.username"></Input>
+          </FormItem>
+          <FormItem label="手机号" prop="phone">
+            <Input v-model="formInline.phone"></Input>
+          </FormItem>
+          <FormItem>
+            <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
+            <Button @click="handleReset('formInline')" style="margin-left: 8px">重置</Button>
+          </FormItem>
+        </Form>
+      </Modal>
     </Card>
   </div>
 </template>
@@ -18,7 +33,32 @@
     data() {
       return {
         msg: {
-          title: document.title
+          title: document.title,
+          buttonText:"添加新用户"
+        },
+        temp: {
+          modal1: false
+        },
+        formInline: {
+          username: '',
+          phone: ''
+        },
+        ruleInline: {
+          username: [{
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+          }],
+          phone: [{
+            required: true,
+            message: '请输入手机号',
+            trigger: 'blur'
+          }, {
+            type: 'string',
+            len: 11,
+            message: '手机号11位',
+            trigger: 'blur'
+          }]
         },
         columns1: [
           {
@@ -150,7 +190,7 @@
           }
         }
         this.$Modal.warning({
-          title: 'User Info',
+          title: '用户信息',
           content: cont,
           closable: true
         })
@@ -176,6 +216,17 @@
       changePage() {
         // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
         this.data1 = this.mockTableData1();
+      },
+      handleSubmit(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$Message.success('Success!');
+            this.temp.modal1 = false;
+          }
+        })
+      },
+      handleReset(name) {
+        this.$refs[name].resetFields();
       }
     }
   };

@@ -28,11 +28,11 @@
               <FormItem label="DatePicker">
                 <Row>
                   <Col span="11">
-                    <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
+                    <DatePicker type="date" :editable="false" placeholder="Select date" v-model="formItem.date"></DatePicker>
                   </Col>
                   <Col span="2" style="text-align: center">-</Col>
                   <Col span="11">
-                    <TimePicker type="time" placeholder="Select time" v-model="formItem.time"></TimePicker>
+                    <TimePicker format="HH:mm" :editable="false" type="time" placeholder="Select time" v-model="formItem.time"></TimePicker>
                   </Col>
                 </Row>
               </FormItem>
