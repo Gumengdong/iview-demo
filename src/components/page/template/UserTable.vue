@@ -1,16 +1,26 @@
 <template>
   <div>
-    <Crumbs :title="msg.title"></Crumbs>
     <Card>
       <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true">{{msg.buttonText}}</Button>
       <Table stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
-          <Page :total="20" :current="1" @on-change="changePage"></Page>
+          <Page :total="100" :current="1" @on-change="changePage"></Page>
         </div>
       </div>
       <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
-        
+        <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
+          <FormItem label="名称" prop="username">
+            <Input v-model="formInline.username"></Input>
+          </FormItem>
+          <FormItem label="手机号" prop="phone">
+            <Input v-model="formInline.phone" :maxlength="11"></Input>
+          </FormItem>
+          <FormItem>
+            <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
+            <Button @click="handleReset('formInline')" style="margin-left: 8px">重置</Button>
+          </FormItem>
+        </Form>
       </Modal>
     </Card>
   </div>
@@ -20,15 +30,34 @@
   import Crumbs from '@/components/base/Crumbs.vue';
   import {timestampToTime} from '@/utils/utils.js';
   export default {
-    name: 'Role',
-    data () {
+    data() {
       return {
         msg: {
           title: document.title,
-          buttonText: "添加新角色"
+          buttonText:"添加新用户"
         },
         temp: {
           modal1: false
+        },
+        formInline: {
+          username: '',
+          phone: ''
+        },
+        ruleInline: {
+          username: [{
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+          }],
+          phone: [{
+            required: true,
+            message: '请输入手机号',
+            trigger: 'blur'
+          }, {
+            pattern: /^1[34578]\d{9}$/,
+            message: '请输入正确格式',
+            trigger: 'blur'
+          }]
         },
         columns1: [
           {
@@ -53,31 +82,33 @@
             editable: true
           },
           {
-            title: '权限',
-            key: 'auth'
+            title: '头像',
+            key: 'headurl'
           },
           {
-            title: '下属账号',
-            key: 'account',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.showUser(params.index);
-                    }
-                  }
-                }, '查看成员')
-              ]);
+            title: '手机号',
+            key: 'phone',
+            filters: [
+              {
+                label: '1311',
+                value: '1311'
+              },
+              {
+                label: '1312',
+                value: '1312'
+              }
+            ],
+            filterMethod(value, row) {
+              return row.phone.indexOf(value) > -1;
             }
           },
           {
-            title: '描述',
-            key: 'desc'
+            title: '所属公司',
+            key: 'company'
+          },
+          {
+            title: '绑定微信',
+            key: 'bingwechat'
           },
           {
             title: '创建时间',
@@ -100,7 +131,7 @@
                   },
                   on: {
                     click: () => {
-                      this.showInfo(params.index);
+                      this.show(params.index);
                     }
                   }
                 }, '查看'),
@@ -139,7 +170,8 @@
                   }
                 }, [
                     h('Button', {
-                      props: { type: 'error', size: 'small' }
+                      props: { type: 'error', size: 'small' },
+                      style: { marginRight: '5px' }
                     }, '删除')
                   ])
               ]);
@@ -154,15 +186,15 @@
       Crumbs
     },
     methods: {
-      showInfo (index) {
+      show (index) {
         let cont = "";
         for (let i = 0; i < this.columns1.length; i++) {
           if (this.columns1[i].title != undefined && this.columns1[i].key != "action") {
             cont += this.columns1[i].title + "：" + this.data1[index][this.columns1[i].key] + "<br>";
           }
         }
-        this.$Modal.info({
-          title: 'User Info',
+        this.$Modal.warning({
+          title: '用户信息',
           content: cont,
           closable: true
         })
@@ -175,23 +207,30 @@
         for (let i = 0; i < 10; i++) {
           data.push({
             id: i,
-            name: "管理员 " + Math.floor(Math.random() * 100),
-            auth: "权限",
-            desc: "描述",
+            name: "Mike " + Math.floor(Math.random() * 100 + 1),
+            headurl: "url",
+            phone: "131" + Math.floor(Math.random() * 100000000 + 1),
+            company: "公司" + (Math.floor(Math.random() * 2 + 1) == 2 ? 'a':'b'),
+            bingwechat: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
             date: timestampToTime(new Date())
           })
         }
         return data;
       },
-      showUser (index){
-        this.$Modal.info({
-          title: '查看成员',
-          closable: true,
-          width: 1000
+      changePage() {
+        // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
+        this.data1 = this.mockTableData1();
+      },
+      handleSubmit(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$Message.success('Success!');
+            this.temp.modal1 = false;
+          }
         })
       },
-      changePage() {
-        this.data1 = this.mockTableData1();
+      handleReset(name) {
+        this.$refs[name].resetFields();
       }
     }
   };

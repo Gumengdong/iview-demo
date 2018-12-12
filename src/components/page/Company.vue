@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true">{{msg.buttonText}}</Button>
+    <Crumbs :title="msg.title"></Crumbs>
+    <Card>
+      <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true">{{msg.buttonText}}</Button>
       <Table stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
@@ -10,16 +12,19 @@
       <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
         <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
           <FormItem label="公司名称" prop="companyName">
-            <Input v-model="formInline.companyName"></Input>
+            <Input v-model="formInline.companyName" placeholder="请输入公司名称"></Input>
           </FormItem>
-          <FormItem label="公司类型" prop="companyType">
-            <Input v-model="formInline.companyType"></Input>
-          </FormItem>
+          <Form-item label="公司类型" prop="companyType">
+            <Select v-model="formInline.companyType" placeholder="请选择公司类型">
+              <Option value="1">空间运营商</Option>
+              <Option value="2">入驻企业</Option>
+            </Select>
+          </Form-item>
           <FormItem label="地址" prop="companyAddress">
-            <Input v-model="formInline.companyAddress"></Input>
+            <Input v-model="formInline.companyAddress" placeholder="请输入公司地址"></Input>
           </FormItem>
           <FormItem label="邮箱" prop="companyEmail">
-            <Input v-model="formInline.companyEmail"></Input>
+            <Input v-model="formInline.companyEmail" placeholder="请输入公司邮箱"></Input>
           </FormItem>
           <FormItem>
             <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
@@ -27,10 +32,12 @@
           </FormItem>
         </Form>
       </Modal>
+    </Card>
   </div>
 </template>
 <script>
   import Crumbs from '@/components/base/Crumbs.vue';
+  import {timestampToTime} from '@/utils/utils.js';
   export default {
     data() {
       return {
@@ -56,11 +63,6 @@
           companyType: [{
             required: true,
             message: '请选择类型',
-            trigger: 'blur'
-          }, {
-            type: 'string',
-            len: 11,
-            message: '手机号11位',
             trigger: 'blur'
           }],
           companyAddress: [{
@@ -307,7 +309,7 @@
             paymentnum: "131" + Math.floor(Math.random() * 100000000 + 1),
             email: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
             logo: "logo",
-            date: new Date()
+            date: timestampToTime(new Date())
           })
         }
         return data;

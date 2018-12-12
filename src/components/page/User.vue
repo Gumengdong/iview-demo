@@ -11,11 +11,11 @@
       </div>
       <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
         <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
-          <FormItem label="用户名" prop="username">
+          <FormItem label="名称" prop="username">
             <Input v-model="formInline.username"></Input>
           </FormItem>
           <FormItem label="手机号" prop="phone">
-            <Input v-model="formInline.phone"></Input>
+            <Input v-model="formInline.phone" :maxlength="11"></Input>
           </FormItem>
           <FormItem>
             <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
@@ -29,6 +29,7 @@
 
 <script>
   import Crumbs from '@/components/base/Crumbs.vue';
+  import {timestampToTime} from '@/utils/utils.js';
   export default {
     data() {
       return {
@@ -54,9 +55,8 @@
             message: '请输入手机号',
             trigger: 'blur'
           }, {
-            type: 'string',
-            len: 11,
-            message: '手机号11位',
+            pattern: /^1[34578]\d{9}$/,
+            message: '请输入正确格式',
             trigger: 'blur'
           }]
         },
@@ -119,7 +119,7 @@
           {
             title: '操作',
             key: 'action',
-            width: 150,
+            width: 180,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -169,7 +169,12 @@
                       console.log("cancel");
                     }
                   }
-                }, '删除')
+                }, [
+                    h('Button', {
+                      props: { type: 'error', size: 'small' },
+                      style: { marginRight: '5px' }
+                    }, '删除')
+                  ])
               ]);
             }
           }
@@ -208,7 +213,7 @@
             phone: "131" + Math.floor(Math.random() * 100000000 + 1),
             company: "公司" + (Math.floor(Math.random() * 2 + 1) == 2 ? 'a':'b'),
             bingwechat: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
-            date: new Date()
+            date: timestampToTime(new Date())
           })
         }
         return data;
