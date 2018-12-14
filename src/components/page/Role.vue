@@ -10,7 +10,10 @@
         </div>
       </div>
       <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
-        
+      </Modal>
+
+      <Modal v-model="temp.modal2" title="查看成员" :footer-hide="true" width="80">
+        <UserTable></UserTable>
       </Modal>
     </Card>
   </div>
@@ -18,6 +21,7 @@
 
 <script>
   import Crumbs from '@/components/base/Crumbs.vue';
+  import UserTable from '@/components/page/template/UserTable.vue';
   import {timestampToTime} from '@/utils/utils.js';
   export default {
     name: 'Role',
@@ -28,7 +32,8 @@
           buttonText: "添加新角色"
         },
         temp: {
-          modal1: false
+          modal1: false,
+          modal2: false
         },
         columns1: [
           {
@@ -57,25 +62,6 @@
             key: 'auth'
           },
           {
-            title: '下属账号',
-            key: 'account',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.showUser(params.index);
-                    }
-                  }
-                }, '查看成员')
-              ]);
-            }
-          },
-          {
             title: '描述',
             key: 'desc'
           },
@@ -87,7 +73,7 @@
           {
             title: '操作',
             key: 'action',
-            width: 180,
+            width: 240,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -121,6 +107,21 @@
                   }
                 }, '编辑'),
 
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.temp.modal2 = true;
+                    }
+                  }
+                }, '查看成员'),
+
                 h('Poptip', {
                   props: {
                     confirm: true,
@@ -151,7 +152,8 @@
       }
     },
     components: {
-      Crumbs
+      Crumbs,
+      UserTable
     },
     methods: {
       showInfo (index) {
@@ -176,19 +178,12 @@
           data.push({
             id: i,
             name: "管理员 " + Math.floor(Math.random() * 100),
-            auth: "权限",
+            auth: "权限" + Math.floor(Math.random() * 2),
             desc: "描述",
             date: timestampToTime(new Date())
           })
         }
         return data;
-      },
-      showUser (index){
-        this.$Modal.info({
-          title: '查看成员',
-          closable: true,
-          width: 1000
-        })
       },
       changePage() {
         this.data1 = this.mockTableData1();

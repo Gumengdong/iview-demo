@@ -83,8 +83,36 @@
             editable: true
           },
           {
+            title: '角色',
+            key: 'role'
+          },
+          {
             title: '头像',
-            key: 'headurl'
+            key: 'headurl',
+            render: (h, params) => {
+              return h('div', [
+                h('img', {
+                  attrs: {
+                    src: params.row.headurl,
+                    width: 60,
+                    height: 60
+                  },
+                  style: {
+                    marginTop: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.$Modal.info({
+                        title: '头像',
+                        content: '<img src=' + params.row.headurl + '>',
+                        closable: true
+                      });
+                    }
+                  }
+                }),
+              ]);
+            }
           },
           {
             title: '手机号',
@@ -209,7 +237,8 @@
           data.push({
             id: i,
             name: "Mike " + Math.floor(Math.random() * 100 + 1),
-            headurl: "url",
+            role: "role" + Math.floor(Math.random() * 2 + 1),
+            headurl: "http://avatar.csdn.net/A/2/8/3_dogfights.jpg",
             phone: "131" + Math.floor(Math.random() * 100000000 + 1),
             company: "公司" + (Math.floor(Math.random() * 2 + 1) == 2 ? 'a':'b'),
             bingwechat: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
@@ -225,7 +254,7 @@
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('Success!');
+            this.$Message.success('添加成功');
             this.temp.modal1 = false;
           }
         })
