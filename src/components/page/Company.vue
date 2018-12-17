@@ -134,7 +134,7 @@
           {
             title: '操作',
             key: 'action',
-            width: 340,
+            width: 300,
             render: (h, params) => {
 
               if(params.row.type == "B"){
@@ -184,7 +184,7 @@
                         console.log(params.index);
                       }
                     }
-                  }, '查看下级用户'),
+                  }, '下级企业'),
 
                   h('Poptip', {
                     props: {

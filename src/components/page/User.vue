@@ -2,26 +2,15 @@
   <div>
     <Crumbs :title="msg.title"></Crumbs>
     <Card>
-      <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true">{{msg.buttonText}}</Button>
+      <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true;temp.title1 = '添加新用户'">{{msg.buttonText}}</Button>
       <Table stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
           <Page :total="100" :current="1" @on-change="changePage"></Page>
         </div>
       </div>
-      <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
-        <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
-          <FormItem label="名称" prop="username">
-            <Input v-model="formInline.username"></Input>
-          </FormItem>
-          <FormItem label="手机号" prop="phone">
-            <Input v-model="formInline.phone" :maxlength="11"></Input>
-          </FormItem>
-          <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
-            <Button @click="handleReset('formInline')" style="margin-left: 8px">重置</Button>
-          </FormItem>
-        </Form>
+      <Modal v-model="temp.modal1" :title="temp.title1" :footer-hide="true">
+        <UserForm></UserForm>
       </Modal>
     </Card>
   </div>
@@ -29,6 +18,7 @@
 
 <script>
   import Crumbs from '@/components/base/Crumbs.vue';
+  import UserForm from '@/components/page/template/UserForm.vue';
   import {timestampToTime} from '@/utils/utils.js';
   export default {
     data() {
@@ -38,7 +28,8 @@
           buttonText:"添加新用户"
         },
         temp: {
-          modal1: false
+          modal1: false,
+          title1: ""
         },
         formInline: {
           username: '',
@@ -78,7 +69,7 @@
           },
           {
             title: '名称',
-            key: 'name',
+            key: 'username',
             sortable: true,
             editable: true
           },
@@ -175,8 +166,10 @@
                   },
                   on: {
                     click: () => {
-                      console.log(this.columns1);
-                      console.log(this.data1[params.index]);
+                      this.temp.modal1 = true;
+                      this.temp.title1 = '编辑';
+                      this.formInline.username = this.data1[params.index].username;
+                      this.formInline.phone = this.data1[params.index].phone;
                     }
                   }
                 }, '编辑'),
@@ -212,7 +205,8 @@
       }
     },
     components: {
-      Crumbs
+      Crumbs,
+      UserForm
     },
     methods: {
       show (index) {
@@ -236,9 +230,9 @@
         for (let i = 0; i < 10; i++) {
           data.push({
             id: i,
-            name: "Mike " + Math.floor(Math.random() * 100 + 1),
+            username: "Mike " + Math.floor(Math.random() * 100 + 1),
             role: "role" + Math.floor(Math.random() * 2 + 1),
-            headurl: "http://avatar.csdn.net/A/2/8/3_dogfights.jpg",
+            headurl: "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
             phone: "131" + Math.floor(Math.random() * 100000000 + 1),
             company: "公司" + (Math.floor(Math.random() * 2 + 1) == 2 ? 'a':'b'),
             bingwechat: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
@@ -250,17 +244,6 @@
       changePage() {
         // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
         this.data1 = this.mockTableData1();
-      },
-      handleSubmit(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.$Message.success('添加成功');
-            this.temp.modal1 = false;
-          }
-        })
-      },
-      handleReset(name) {
-        this.$refs[name].resetFields();
       }
     }
   };

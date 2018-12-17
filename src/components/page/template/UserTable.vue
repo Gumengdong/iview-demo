@@ -1,13 +1,11 @@
 <template>
   <div>
-    <Card>
-      <Table stripe editable :columns="columns1" :data="data1"></Table>
-      <div style="margin: 10px;overflow: hidden">
-        <div style="float: right;">
-          <Page :total="100" :current="1" @on-change="changePage"></Page>
-        </div>
+    <Table stripe editable :columns="columns1" :data="data1"></Table>
+    <div style="margin: 10px;overflow: hidden">
+      <div style="float: right;">
+        <Page :total="100" :current="1" @on-change="changePage"></Page>
       </div>
-    </Card>
+    </div>
   </div>
 </template>
 
@@ -17,31 +15,7 @@
     data() {
       return {
         msg: {
-          title: document.title,
-          buttonText:"添加新用户"
-        },
-        temp: {
-          modal1: false
-        },
-        formInline: {
-          username: '',
-          phone: ''
-        },
-        ruleInline: {
-          username: [{
-            required: true,
-            message: '请输入用户名',
-            trigger: 'blur'
-          }],
-          phone: [{
-            required: true,
-            message: '请输入手机号',
-            trigger: 'blur'
-          }, {
-            pattern: /^1[34578]\d{9}$/,
-            message: '请输入正确格式',
-            trigger: 'blur'
-          }]
+          title: document.title
         },
         columns1: [
           {
