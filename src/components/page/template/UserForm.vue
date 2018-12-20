@@ -1,15 +1,15 @@
 <template>
   <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
     <FormItem label="名称" prop="username">
-      <Input v-model="formInline.username"></Input>
+      <Input v-model="formInline.username" placeholder="请输入用户名"></Input>
     </FormItem>
     <FormItem label="手机号" prop="phone">
-      <Input v-model="formInline.phone" :maxlength="11"></Input>
+      <Input v-model="formInline.phone" placeholder="请输入手机号" :maxlength="11"></Input>
     </FormItem>
     <Form-item label="角色类型" prop="RoleType">
       <Select v-model="formInline.RoleType" placeholder="请选择角色">
-        <Option value="1">角色1</Option>
-        <Option value="2">角色2</Option>
+        <Option value="role1">角色1</Option>
+        <Option value="role2">角色2</Option>
       </Select>
     </Form-item>
     <Form-item label="公司类型" prop="companyType">
@@ -22,11 +22,13 @@
       <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
       <Button @click="handleReset('formInline')" style="margin-left: 8px">重置</Button>
     </FormItem>
+    <p v-show="false">{{TempUserFormData}}</p>
   </Form>
 </template>
 
 <script>
 export default {
+  props: ['TempUserFormData'],
   data() {
     return {
       msg: {
@@ -70,6 +72,19 @@ export default {
         ]
       }
     };
+  },
+  beforeUpdate: function(){
+    if(this.TempUserFormData.type === "edit"){
+      this.formInline.username = this.TempUserFormData.username;
+      this.formInline.phone = this.TempUserFormData.phone;
+      this.formInline.RoleType = this.TempUserFormData.role;
+      this.formInline.companyType = this.TempUserFormData.companyType;
+    } else {
+      this.formInline.username = '';
+      this.formInline.phone = '';
+      this.formInline.RoleType = '';
+      this.formInline.companyType = '';
+    }
   },
   methods: {
     handleSubmit(name) {

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import LoginForm from '@/components/base/Login-Form.vue';
+  import LoginForm from '@/components/base/LoginForm.vue';
   import {GetRequest} from '@/utils/utils.js';
   export default {
     name: 'test',

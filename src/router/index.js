@@ -19,7 +19,7 @@ export default new Router({
       redirect: { name: 'Welcome' }
     },
     {
-      path: '/manage',
+      path: '/build',
       name: 'Home',
       component: Home,
       meta: {
@@ -27,7 +27,7 @@ export default new Router({
       },
       children: [
         {
-          path: '/manage',
+          path: '/build',
           name: 'Welcome',
           component: Welcome,
           meta: {
@@ -36,7 +36,7 @@ export default new Router({
           }
         },
         {
-          path: '/manage/user',
+          path: '/build/user',
           name: 'User',
           component: User,
           meta: {
@@ -45,7 +45,7 @@ export default new Router({
           }
         },
         {
-          path: '/manage/role',
+          path: '/build/role',
           name: 'Role',
           component: Role,
           meta: {
@@ -54,7 +54,7 @@ export default new Router({
           }
         },
         {
-          path: '/manage/company',
+          path: '/build/company',
           name: 'Company',
           component: Company,
           meta: {
@@ -63,7 +63,7 @@ export default new Router({
           }
         },
         {
-          path: '/manage/msg',
+          path: '/build/msg',
           name: 'Msg',
           component: Msg,
           meta: {
@@ -72,7 +72,7 @@ export default new Router({
           }
         },
         {
-          path: '/manage/userinfo',
+          path: '/build/userinfo',
           name: 'Userinfo',
           component: Userinfo,
           meta: {

@@ -11,6 +11,8 @@ import 'iview/dist/styles/iview.css';
 import {getCookie} from './utils/utils.js';
 import TreeTable from 'tree-table-vue';
 
+require('./mock');
+
 Vue.config.productionTip = false;
 
 Vue.use(Vuex);
