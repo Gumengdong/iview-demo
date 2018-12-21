@@ -79,11 +79,6 @@ export default {
       this.formInline.phone = this.TempUserFormData.phone;
       this.formInline.RoleType = this.TempUserFormData.role;
       this.formInline.companyType = this.TempUserFormData.companyType;
-    } else {
-      this.formInline.username = '';
-      this.formInline.phone = '';
-      this.formInline.RoleType = '';
-      this.formInline.companyType = '';
     }
   },
   methods: {

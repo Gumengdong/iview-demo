@@ -2,42 +2,24 @@
   <div>
     <Crumbs :title="msg.title"></Crumbs>
     <Card>
-      <Button style="margin-bottom: 10px;" type="primary" @click="temp.modal1 = true">{{msg.buttonText}}</Button>
+      <Button style="margin-bottom: 10px;" type="primary" @click="modalShow('add')">{{msg.buttonText}}</Button>
       <Table stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
-          <Page :total="100" :current="1" @on-change="changePage"></Page>
+          <Page :total="pageMsg.total" :current="pageMsg.current" :page-size="pageMsg.size" @on-change="changePage"></Page>
         </div>
       </div>
       <Modal v-model="temp.modal1" :title="msg.buttonText" :footer-hide="true">
-        <Form ref="formInline" :model="formInline" :rules="ruleInline" label-position="top">
-          <FormItem label="公司名称" prop="companyName">
-            <Input v-model="formInline.companyName" placeholder="请输入公司名称"></Input>
-          </FormItem>
-          <Form-item label="公司类型" prop="companyType">
-            <Select v-model="formInline.companyType" placeholder="请选择公司类型">
-              <Option value="1">空间运营商</Option>
-              <Option value="2">入驻企业</Option>
-            </Select>
-          </Form-item>
-          <FormItem label="地址" prop="companyAddress">
-            <Input v-model="formInline.companyAddress" placeholder="请输入公司地址"></Input>
-          </FormItem>
-          <FormItem label="邮箱" prop="companyEmail">
-            <Input v-model="formInline.companyEmail" placeholder="请输入公司邮箱"></Input>
-          </FormItem>
-          <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')">确定</Button>
-            <Button @click="handleReset('formInline')" style="margin-left: 8px">重置</Button>
-          </FormItem>
-        </Form>
+        <CompanyForm :TempCompanyFormData="CompanyFormData"></CompanyForm>
       </Modal>
     </Card>
   </div>
 </template>
+
 <script>
   import Crumbs from '@/components/base/Crumbs.vue';
-  import {timestampToTime} from '@/utils/utils.js';
+  import CompanyForm from "@/components/page/template/CompanyForm.vue";
+  import {timestampToTime, getCookie} from '@/utils/utils.js';
   export default {
     data() {
       return {
@@ -46,35 +28,16 @@
           buttonText:"添加新公司"
         },
         temp: {
-          modal1: false
+          modal1: false,
+          title1: ""
         },
-        formInline: {
-          companyName: '',
-          companyType: '',
-          companyAddress: '',
-          companyEmail: ''
+        pageMsg: {
+          total: 0,
+          current: 1,
+          size: 10
         },
-        ruleInline: {
-          companyName: [{
-            required: true,
-            message: '请输入用户名',
-            trigger: 'blur'
-          }],
-          companyType: [{
-            required: true,
-            message: '请选择类型',
-            trigger: 'blur'
-          }],
-          companyAddress: [{
-            required: true,
-            message: '请输入地址',
-            trigger: 'blur'
-          }],
-          companyEmail: [{
-            required: true,
-            message: '请输入邮箱',
-            trigger: 'blur'
-          }]
+        CompanyFormData: {
+          type: ""
         },
         columns1: [
           {
@@ -110,7 +73,7 @@
           },
           {
             title: '公众号',
-            key: 'wechatpub'
+            key: 'wechatId'
           },
           {
             title: '商户号',
@@ -118,18 +81,43 @@
           },
           {
             title: '邮箱',
-            key: 'email'
+            key: 'email',
+            sortable: true
           },
           {
             title: 'Logo',
             key: 'logo',
-            sortable: true
+            width: 90,
+            render: (h, params) => {
+              return h("div", [
+                h("img", {
+                  attrs: {
+                    src: params.row.logo
+                  },
+                  style: {
+                    maxWidth: "60px",
+                    maxHeight: "60px",
+                    marginTop: "5px",
+                    marginBottom: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.$Modal.info({
+                        title: "Logo",
+                        content: '<img width="300" src=' + params.row.logo + ">",
+                        closable: true
+                      });
+                    }
+                  }
+                })
+              ]);
+            }
           },
           {
             title: '创建时间',
             key: 'date',
             sortable: true,
-            width: 200
+            width: 150
           },
           {
             title: '操作',
@@ -137,7 +125,7 @@
             width: 300,
             render: (h, params) => {
 
-              if(params.row.type == "B"){
+              if(params.row.type == "500"){
                 /* type of B */
                 return h('div', [
                   h('Button', {
@@ -272,14 +260,30 @@
           }
         ],
 
-        data1: this.mockTableData1()
+        data1: []
       }
     },
     components: {
-      Crumbs
+      Crumbs,
+      CompanyForm
+    },
+    mounted: function(){
+      this.mockTableData1();
     },
 
     methods: {
+      modalShow(type, index) {
+        this.temp.modal1 = true;
+        if (type === "add") {
+          this.temp.title1 = "添加新用户";
+          this.CompanyFormData = {};
+          this.CompanyFormData.type = "add";
+        } else {
+          this.temp.title1 = "编辑";
+          this.CompanyFormData = this.data1[index];
+          this.CompanyFormData.type = "edit";
+        }
+      },
       show (index) {
         let cont = "";
         for (let i = 0; i < this.columns1.length; i++) {
@@ -297,37 +301,26 @@
         this.data1.splice(index, 1);
       },
       mockTableData1() {
-        let data = [];
-        for (let i = 0; i < 10; i++) {
-          let companyType = (Math.floor(Math.random() * 2 + 1) == 2 ? "B":"C");
-          data.push({
-            id: i,
-            name: "公司 " + Math.floor(Math.random() * 100 + 1),
-            type: companyType,
-            address: "地址",
-            wechatpub: "asdhakshk" + (Math.floor(Math.random() * 2 + 1) == 2 ? 'A':'B'),
-            paymentnum: "131" + Math.floor(Math.random() * 100000000 + 1),
-            email: (Math.floor(Math.random() * 2 + 1) == 2 ? true:false),
-            logo: "logo",
-            date: timestampToTime(new Date())
-          })
-        }
-        return data;
+        let temp = this;
+        let mydata = JSON.stringify({
+          current: this.pageMsg.current
+        });
+        this.axios.get("/company/list", mydata,{
+          headers: {
+            token: getCookie("token")
+          }
+        }).then(function(response) {
+          if (response.data.code == "200") {
+            temp.data1 = response.data.data.records;
+            temp.pageMsg.total = response.data.data.total
+          }
+        }).catch(function(response) {
+          console.log(response);
+        });
       },
       changePage() {
         // The simulated data is changed directly here, and the actual usage scenario should fetch the data from the server
         this.data1 = this.mockTableData1();
-      },
-      handleSubmit(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.$Message.success('Success!');
-            this.temp.modal1 = false;
-          }
-        })
-      },
-      handleReset(name) {
-        this.$refs[name].resetFields();
       }
     }
   }
