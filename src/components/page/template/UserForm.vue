@@ -79,13 +79,19 @@ export default {
       this.formInline.phone = this.TempUserFormData.phone;
       this.formInline.RoleType = this.TempUserFormData.role;
       this.formInline.companyType = this.TempUserFormData.companyType;
+    } else {
+      this.formInline = {};
     }
   },
   methods: {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("添加成功");
+          if(this.TempUserFormData.type === "edit") {
+            this.$Message.success("添加成功");
+          } else {
+            
+          }
           this.temp.modal1 = false;
         }
       });

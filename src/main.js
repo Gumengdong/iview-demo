@@ -18,7 +18,6 @@ Vue.config.productionTip = false;
 Vue.use(Vuex);
 Vue.use(iView);
 Vue.use(VueAxios, axios);
-require('../mock');
 Vue.use(TreeTable);
 
 var getToken = getCookie("token");

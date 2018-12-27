@@ -1,7 +1,18 @@
 //引入mockjs
 const Mock = require('mockjs');
+const Random = Mock.Random
 import {timestampToTime} from '@/utils/utils.js';
 //使用mockjs模拟数据
+
+/* 模拟登录 */
+Mock.mock('/company/companyLogin', 'post', (options) => {
+  // console.log(options.body);
+  return {
+    "msg": "cuser",
+    "code": 200,
+    "data": null
+  }
+});
 
 /* 信息 */
 Mock.mock('/company/info', 'get', (options) => {
@@ -30,39 +41,37 @@ var userData = Mock.mock({
   'list|8-10': [{
     // 属性 id 是一个自增数，起始值为 1，每次增 1
     "id|+1": 0,
-    "username|+1": [
+    // 属性 username 是一个随机字段
+    "username|1": [
       "Make",
       "Jack",
       "Tom"
     ],
-    "role|+1": [
+    "role|1": [
       "1",
       "2"
     ],
-    "headurl|+1": [
+    "headurl|1": [
       "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
       "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191",
       "https://panjiachen.github.io/vue-element-admin/static/img/401.089007e.gif"
     ],
-    "phone|+1":[
+    "phone|1":[
       "13111111111",
       "13211111111",
       "13311111111"
     ],
-    "company|+1": [
+    "company|1": [
       "公司A",
       "公司B",
       "公司C"
     ],
-    "bingwechat|+1": [
+    "bingwechat|1": [
       true,
       false
     ],
-    "date|+1":[
-      timestampToTime(new Date() + 1000),
-      timestampToTime(new Date() - 1000)
-    ]
+    "date": Random.datetime()
   }]
 });
 
