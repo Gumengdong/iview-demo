@@ -60,14 +60,6 @@
         },
       };
     },
-    beforeUpdate: function(){
-      if(this.TempCompanyFormData.type === "edit"){
-        this.formInline.companyName = this.TempCompanyFormData.username;
-        this.formInline.companyType = this.TempCompanyFormData.phone;
-        this.formInline.companyAddress = this.TempCompanyFormData.role;
-        this.formInline.companyEmail = this.TempCompanyFormData.companyType;
-      }
-    },
     methods: {
       handleSubmit(name) {
         this.$refs[name].validate(valid => {

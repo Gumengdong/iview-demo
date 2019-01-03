@@ -1,22 +1,24 @@
 <template>
   <Menu :active-name="menuitemSelect.subitem" :accordion="true" :open-names="[menuitemSelect.item]" theme="dark" width="auto" :class="menuitemClasses" v-show="!isCollapsed">
-    <Submenu name="build1">
+    <Submenu name="build">
       <template slot="title">
           <Icon type="ios-grid" size="18" />
           <span>基础数据</span>
       </template>
-      <MenuItem name="build1-user" to="/build/user">用户管理</MenuItem>
-      <MenuItem name="build1-role" to="/build/role">角色管理</MenuItem>
-      <MenuItem name="build1-company" to="/build/company">公司管理</MenuItem>
+      <MenuItem name="build-user" to="/build/user">用户管理</MenuItem>
+      <MenuItem name="build-role" to="/build/role">角色管理</MenuItem>
+      <MenuItem name="build-company" to="/build/company">公司管理</MenuItem>
+      <MenuItem name="build-auth" to="/build/auth">权限管理</MenuItem>
+      <MenuItem name="build-module" to="/build/module">模块管理</MenuItem>
     </Submenu>
-    <Submenu name="home2">
+    <Submenu name="devices">
       <template slot="title">
           <Icon type="md-bulb" size="18" />
           <span>设备管理</span>
       </template>
-      <MenuItem name="home2-Gateway">网关</MenuItem>
-      <MenuItem name="home2-Device">飞比设备</MenuItem>
-      <MenuItem name="home2-Aircondition">空调设备</MenuItem>
+      <MenuItem name="devices-Gateway">网关</MenuItem>
+      <MenuItem name="devices-Device">飞比设备</MenuItem>
+      <MenuItem name="devices-Aircondition">空调设备</MenuItem>
     </Submenu>
   </Menu>
 </template>
@@ -45,16 +47,24 @@ export default {
       // console.log(this.$route.path);
       switch (this.$route.path){
         case '/build/user':
-          activeName.subitem = "build1-user";
-          activeName.item = "build1";
+          activeName.subitem = "build-user";
+          activeName.item = "build";
           break;
         case '/build/role':
-          activeName.subitem = "build1-role";
-          activeName.item = "build1";
+          activeName.subitem = "build-role";
+          activeName.item = "build";
           break;
         case '/build/company':
-          activeName.subitem = "build1-company";
-          activeName.item = "build1";
+          activeName.subitem = "build-company";
+          activeName.item = "build";
+          break;
+        case '/build/auth':
+          activeName.subitem = "build-auth";
+          activeName.item = "build";
+          break;
+        case '/build/module':
+          activeName.subitem = "build-module";
+          activeName.item = "build";
           break;
         default:
           activeName.subitem = "";

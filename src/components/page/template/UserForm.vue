@@ -80,7 +80,10 @@ export default {
       this.formInline.RoleType = this.TempUserFormData.role;
       this.formInline.companyType = this.TempUserFormData.companyType;
     } else {
-      this.formInline = {};
+      this.formInline.username = "";
+      this.formInline.phone = "";
+      this.formInline.RoleType = "";
+      this.formInline.companyType = "";
     }
   },
   methods: {
@@ -88,9 +91,9 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           if(this.TempUserFormData.type === "edit") {
-            this.$Message.success("添加成功");
+            this.$Message.success("修改成功");
           } else {
-            
+            this.$Message.success("添加成功");
           }
           this.temp.modal1 = false;
         }

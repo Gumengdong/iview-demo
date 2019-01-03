@@ -58,6 +58,10 @@
             editable: true
           },
           {
+            title: '类型',
+            key: 'type'
+          },
+          {
             title: '权限',
             key: 'auth'
           },
@@ -178,6 +182,7 @@
           data.push({
             id: i,
             name: "管理员 " + Math.floor(Math.random() * 100),
+            type: "类型" + (Math.floor(Math.random() * 3) + 1),
             auth: "权限" + Math.floor(Math.random() * 2),
             desc: "描述",
             date: timestampToTime(new Date())

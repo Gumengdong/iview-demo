@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import './head.less'
+import '../../assets/css/head.less'
 export default {
   name: 'Header',
   data () {

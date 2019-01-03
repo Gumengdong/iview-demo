@@ -3,8 +3,8 @@
       <Layout>
           <Sider :collapsed-width="64" v-model="isCollapsed">
             <div class="logo-con">
-              <img v-show="!isCollapsed" src="../assets/header-logo.jpg" alt="logo">
-              <img v-show="isCollapsed" src="../assets/header-logo-mini.jpg" alt="logo">
+              <img v-show="!isCollapsed" src="../assets/img/header-logo.jpg" alt="logo">
+              <img v-show="isCollapsed" src="../assets/img/header-logo-mini.jpg" alt="logo">
             </div>
             <Slid :urlRouter="$route.path" :isCollapsed="isCollapsed"></Slid>
           </Sider>
