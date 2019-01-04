@@ -1,6 +1,6 @@
 <template>
   <Breadcrumb style="margin-bottom:20px">
-    <BreadcrumbItem to="/manage">首页</BreadcrumbItem>
+    <BreadcrumbItem to="/build">首页</BreadcrumbItem>
     <BreadcrumbItem>{{title}}</BreadcrumbItem>
   </Breadcrumb>
 </template>

@@ -53,7 +53,8 @@
           {
             title: "ID",
             key: "id",
-            sortable: true
+            sortable: true,
+            width: 80
           },
           {
             title: "名称",
@@ -63,13 +64,21 @@
           },
           {
             title: "角色",
-            key: "role"
+            key: "role",
+            width: 80
           },
           {
             title: "头像",
             key: "headurl",
+            width: 100,
             render: (h, params) => {
-              return h("div", [
+              return h("div",
+                {
+                  style: {
+                    textAlign: "center",
+                    cursor: "pointer"
+                  }
+                }, [
                 h("img", {
                   attrs: {
                     src: params.row.headurl
