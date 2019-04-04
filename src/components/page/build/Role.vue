@@ -38,46 +38,52 @@
         columns1: [
           {
             type: 'selection',
-            width: 60,
-            align: 'center'
+            align: 'center',
+            width: 60
           },
           {
             type: 'index',
-            width: 60,
-            align: 'center'
+            align: 'center',
+            width: 60
           },
           {
             title: 'ID',
             key: 'id',
-            sortable: true
+            sortable: true,
+            minWidth: 80
           },
           {
             title: '名称',
             key: 'name',
             sortable: true,
-            editable: true
+            editable: true,
+            minWidth: 120
           },
           {
             title: '类型',
-            key: 'type'
+            key: 'type',
+            minWidth: 80
           },
           {
             title: '权限',
-            key: 'auth'
+            key: 'auth',
+            minWidth: 80
           },
           {
             title: '描述',
-            key: 'desc'
+            key: 'desc',
+            minWidth: 160
           },
           {
             title: '创建时间',
             key: 'date',
-            sortable: true
+            sortable: true,
+            minWidth: 160
           },
           {
             title: '操作',
             key: 'action',
-            width: 240,
+            minWidth: 240,
             render: (h, params) => {
               return h('div', [
                 h('Button', {

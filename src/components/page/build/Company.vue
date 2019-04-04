@@ -60,34 +60,39 @@
             title: '公司名称',
             key: 'name',
             sortable: true,
-            editable: true
+            editable: true,
+            minWidth: 120
           },
           {
             title: '公司类型',
             key: 'type',
-            width: 90
+            minWidth: 80
           },
           {
             title: '地址',
-            key: 'address'
+            key: 'address',
+            minWidth: 120
           },
           {
             title: '公众号',
-            key: 'wechatId'
+            key: 'wechatId',
+            minWidth: 120
           },
           {
             title: '商户号',
-            key: 'paymentnum'
+            key: 'paymentnum',
+            minWidth: 120
           },
           {
             title: '邮箱',
             key: 'email',
-            sortable: true
+            sortable: true,
+            minWidth: 120
           },
           {
             title: 'Logo',
             key: 'logo',
-            width: 90,
+            minWidth: 90,
             render: (h, params) => {
               return h("div", [
                 h("img", {
@@ -117,12 +122,12 @@
             title: '创建时间',
             key: 'date',
             sortable: true,
-            width: 150
+            minWidth: 150
           },
           {
             title: '操作',
             key: 'action',
-            width: 300,
+            minWidth: 300,
             render: (h, params) => {
 
               if(params.row.type == "500"){

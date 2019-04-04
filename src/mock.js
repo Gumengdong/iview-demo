@@ -55,7 +55,7 @@ var userData = Mock.mock({
       "https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png",
       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
       "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191",
-      "https://panjiachen.github.io/vue-element-admin/static/img/401.089007e.gif"
+      "https://wpimg.wallstcn.com/e7d23d71-cf19-4b90-a1cc-f56af8c0903d.png"
     ],
     "phone|1":[
       "13111111111",

@@ -9,13 +9,13 @@
             <Slid :urlRouter="$route.path" :isCollapsed="isCollapsed"></Slid>
           </Sider>
           <Layout>
-              <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
+              <Header>
                 <Head @sliderToggle="sliderToggle"></Head>
               </Header>
-              <Content :style="{padding: '24px',height: 'calc(100% - 80px)',overflow: 'auto'}">
+              <Content>
                 <router-view></router-view>
               </Content>
-              <Footer :style="{background: '#fff', boxShadow: '0 -2px 3px 2px rgba(0,0,0,.1)' , textAlign: 'center'}">Copyright © 武智科技2017. All rights reserved.</Footer>
+              <Footer>Copyright © 武智科技2017. All rights reserved.</Footer>
           </Layout>
       </Layout>
     </div>
@@ -46,7 +46,7 @@
     }
   };
 </script>
-<style scoped>
+<style>
   .logo-con {
     overflow: hidden;
   }
@@ -58,10 +58,31 @@
   .ivu-layout.ivu-layout-has-sider {
     height: 100%;
   }
-  .ivu-layout .ivu-content {
+  .ivu-layout-sider {
+    overflow: hidden;
+  }
+  .ivu-layout-sider .ivu-layout-sider-children > ul {
+    height: 100%;
+    overflow-y: scroll;
+    margin-right: -20px;
+    padding-bottom: 64px;
+  }
+  .ivu-layout-content {
+    padding: 24px;
     height: calc(100% - 80px);
+    overflow: auto;
+  }
+  .ivu-layout-header {
+    position: relative;
+    z-index: 2;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 3px 2px;
   }
   .ivu-layout-footer {
+    position: relative;
     padding: 10px 20px;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px -2px 3px 2px;
+    text-align: center;
   }
 </style>

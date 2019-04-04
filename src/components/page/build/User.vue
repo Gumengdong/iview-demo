@@ -3,7 +3,7 @@
     <Crumbs :title="msg.title"></Crumbs>
     <Card>
       <Button style="margin-bottom: 10px;" type="primary" @click="modalShow('add')">{{msg.buttonText}}</Button>
-      <Table stripe editable :columns="columns1" :data="data1"></Table>
+      <Table size="small" stripe editable :columns="columns1" :data="data1"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
           <Page :total="pageMsg.total" :current="pageMsg.current" :page-size="pageMsg.size" @on-change="changePage"></Page>
@@ -42,13 +42,13 @@
         columns1: [
           {
             type: "selection",
-            width: 60,
-            align: "center"
+            align: "center",
+            width: 60
           },
           {
             type: "index",
-            width: 60,
-            align: "center"
+            align: "center",
+            width: 60
           },
           {
             title: "ID",
@@ -60,17 +60,18 @@
             title: "名称",
             key: "username",
             sortable: true,
-            editable: true
+            editable: true,
+            minWidth: 120
           },
           {
             title: "角色",
             key: "role",
-            width: 80
+            minWidth: 80
           },
           {
             title: "头像",
             key: "headurl",
-            width: 100,
+            minWidth: 100,
             render: (h, params) => {
               return h("div",
                 {
@@ -105,6 +106,7 @@
           {
             title: "手机号",
             key: "phone",
+            minWidth: 120,
             filters: [
               {
                 label: "1311",
@@ -121,21 +123,24 @@
           },
           {
             title: "所属公司",
-            key: "company"
+            key: "company",
+            minWidth: 120
           },
           {
             title: "绑定微信",
-            key: "bingwechat"
+            key: "bingwechat",
+            minWidth: 120
           },
           {
             title: "创建时间",
             key: "date",
-            sortable: true
+            sortable: true,
+            minWidth: 160
           },
           {
             title: "操作",
             key: "action",
-            width: 180,
+            minWidth: 180,
             render: (h, params) => {
               return h("div", [
                 h(
